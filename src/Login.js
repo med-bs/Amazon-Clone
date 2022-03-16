@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
+import { auth } from './firebase';
 import "./Login.css";
 
 function Login() {
@@ -7,19 +8,25 @@ function Login() {
   const [password, setPassword] = useState('');
 
   const singIn = e =>{
-    e.preventDedault()
+    e.preventDedault();
     // firebase login
   }
 
   const register = e =>{
-    e.preventDedault()
-    // firebase regester
+    //e.preventDedault();
+    auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((auth)=>{
+          // creation user avec email and password avec success
+          console.log(auth);
+        })
+        .catch(error => alert(error.message))
   }
 
   return (
     <div className="login">
         <Link to='/'>
-            <img className="login__logo" src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png'/>
+            <img className="login__logo" src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png' alt=''/>
         </Link>
         <div className='login__container'>
             <h1>Sign-in</h1>
