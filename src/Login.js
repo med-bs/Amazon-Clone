@@ -1,24 +1,32 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from './firebase';
 import "./Login.css";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const singIn = e =>{
-    e.preventDedault();
-    // firebase login
+  const signIn = (e) =>{
+    //e.preventDedault();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((auth)=> {
+        navigate('/')
+    })
+    .catch(error => alert (error.message))
   }
 
-  const register = e =>{
+  const register = (e) =>{
     //e.preventDedault();
     auth
         .createUserWithEmailAndPassword(email, password)
         .then((auth)=>{
           // creation user avec email and password avec success
-          console.log(auth);
+          if(auth){
+            navigate('/')
+          }
         })
         .catch(error => alert(error.message))
   }
@@ -35,12 +43,14 @@ function Login() {
                 <input type='text' value={email} onChange={e => setEmail(e.target.value)}/>
                 <h5>Password</h5>
                 <input type='password' value={password} onChange={e => setPassword(e.target.value)}/>
-                <button type='submit' className='login__signInButton' onClick={singIn}>Sign In</button>
+               
             </form>
-            <p>
+            <button type='submit' className='login__signInButton' onClick={signIn}>Sign In</button>
+                <p>
                 By signing-in you agree to the AMAZON FAKE CLONE Conditions of Use & Sale. Please see our Privacy Notice, our Cookies Notice and our Interest-Based Ads Notice.
             </p>
             <button className='login__registerButton' onClick={register}>Create your Amazon Account</button>
+          
         </div>
     </div>
   )
