@@ -52,6 +52,11 @@ function Payment() {
             setSucceeded(true)
             setError(false)
             setProcessing(false)
+
+            dispatch({
+                type: 'EMPTY_BASKET'
+            })
+
             navigate('/orders')
         })
     }
