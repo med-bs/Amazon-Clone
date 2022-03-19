@@ -40,7 +40,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/orders" element={<Orders />} />
+          <Route path="/orders" element={<><Header /><Orders /></>} />
           <Route path="/checkout" element={<><Header /><Checkout /></>} />
           <Route path="/payment" element={<><Header /><Elements stripe={promise}><Payment /></Elements></>} />
           <Route path="/" element={<><Header /><Home /></>} />
